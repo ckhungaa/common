@@ -22,6 +22,7 @@ func NewLogger(name string) *Log {
 	mux.Lock()
 	if logFactory == nil {
 		logFactory, _ =  provideLogFactory()
+		logFactory = logFactory.WithOptions(zap.AddCallerSkip(2))
 	}
 	mux.Unlock()
 
