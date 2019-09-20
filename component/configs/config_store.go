@@ -1,4 +1,4 @@
-package config
+package configs
 
 import (
 	"context"
@@ -40,6 +40,7 @@ type StoreImpl struct {
 
 //Store config store interface
 type Store interface {
+	// GetConfig get config struct from environment variables
 	GetConfig(ctx context.Context, val interface{}) error
 }
 

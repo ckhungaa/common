@@ -1,9 +1,9 @@
-package repositories
+package repos
 
 import (
 	"context"
-	"github.com/ckhungaa/common/domain/entities"
-	"github.com/ckhungaa/common/errs"
+	"github.com/ckhungaa/common/utils/entities"
+	"github.com/ckhungaa/common/utils/errs"
 	"github.com/pkg/errors"
 	"strings"
 )

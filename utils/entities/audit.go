@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+//Audit audit object for every entity
 type Audit struct {
 	Id           string
 	CreatedDate  time.Time
@@ -26,6 +27,7 @@ func (m *Audit) Modified() {
 	m.ModifiedDate = time.Now()
 }
 
+//ToProto to gRPC proto object
 func (m *Audit) ToProto() (*proto.Audit, error) {
 	createDate, err := ptypes.TimestampProto(m.CreatedDate)
 	if err != nil {
