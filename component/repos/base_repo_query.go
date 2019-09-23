@@ -1,6 +1,5 @@
 package repos
 
-
 type BaseTableQuery interface {
 	TableName() string
 }

@@ -8,7 +8,8 @@ import (
 )
 
 type logLevel int
-const(
+
+const (
 	debugLevel logLevel = iota
 	infoLevel
 	warnLevel
@@ -16,42 +17,40 @@ const(
 	fatalLevel
 )
 
-func (log *Log) Debugf(ctx context.Context, format string, args ...interface{})  {
+func (log *Log) Debugf(ctx context.Context, format string, args ...interface{}) {
 	log.printf(ctx, debugLevel, nil, format, args...)
 }
 
-func (log *Log) Infof(ctx context.Context, format string, args ...interface{})  {
+func (log *Log) Infof(ctx context.Context, format string, args ...interface{}) {
 	log.printf(ctx, infoLevel, nil, format, args...)
 }
 
-func (log *Log) Warnf(ctx context.Context, format string, args ...interface{})  {
+func (log *Log) Warnf(ctx context.Context, format string, args ...interface{}) {
 	log.printf(ctx, warnLevel, nil, format, args...)
 }
 
-func (log *Log) Warne(ctx context.Context, err error, format string, args ...interface{})  {
+func (log *Log) Warne(ctx context.Context, err error, format string, args ...interface{}) {
 	log.printf(ctx, warnLevel, err, format, args...)
 }
 
-func (log *Log) Errorf(ctx context.Context, format string, args ...interface{})  {
+func (log *Log) Errorf(ctx context.Context, format string, args ...interface{}) {
 	log.printf(ctx, errorLevel, nil, format, args...)
 }
 
-func (log *Log) Errore(ctx context.Context, err error, format string, args ...interface{})  {
+func (log *Log) Errore(ctx context.Context, err error, format string, args ...interface{}) {
 	log.printf(ctx, errorLevel, err, format, args...)
 }
 
-func (log *Log) Fatale(ctx context.Context, err error, format string, args ...interface{})  {
+func (log *Log) Fatale(ctx context.Context, err error, format string, args ...interface{}) {
 	log.printf(ctx, fatalLevel, err, format, args...)
 }
 
-
-
-func (log *Log) printf(ctx context.Context, level logLevel, err error, format string, args ...interface{})  {
+func (log *Log) printf(ctx context.Context, level logLevel, err error, format string, args ...interface{}) {
 	var (
 		stan string
 	)
 	defer log.logger.Sync()
-	if md, err := contexts.ReadMD(ctx); err == nil{
+	if md, err := contexts.ReadMD(ctx); err == nil {
 		if md != nil {
 			stan = md.Stan
 		}
@@ -72,4 +71,3 @@ func (log *Log) printf(ctx context.Context, level logLevel, err error, format st
 		log.logger.Debug(fmt.Sprintf(format, args...), zap.String("stan", stan))
 	}
 }
-

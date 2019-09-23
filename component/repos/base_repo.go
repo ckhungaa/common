@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/ckhungaa/common/component/configs"
+	"github.com/ckhungaa/common/utils/logs"
 	"github.com/google/wire"
 	"github.com/guregu/dynamo"
 )
@@ -14,6 +15,7 @@ var (
 		ProvideConfig,
 		ProvideBaseRepository,
 	)
+	log = logs.NewLogger("repos")
 )
 
 // TODO: add non-local config

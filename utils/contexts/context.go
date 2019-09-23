@@ -10,7 +10,7 @@ type ContextKey string
 
 const (
 	//Stan system tracing audit number
-	Stan ContextKey = "x-stan"
+	Stan  ContextKey = "x-stan"
 	Token ContextKey = "x-token"
 )
 

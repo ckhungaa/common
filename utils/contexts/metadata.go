@@ -2,8 +2,9 @@ package contexts
 
 import (
 	"context"
-	"github.com/ckhungaa/common/utils/errs"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/status"
 )
 
 type ContextMetaData struct {
@@ -11,23 +12,23 @@ type ContextMetaData struct {
 }
 
 func defaultOpts(stan string) ContextMetaData {
-	return ContextMetaData{Stan:stan}
+	return ContextMetaData{Stan: stan}
 }
 
 func (opts ContextMetaData) toMetaData() metadata.MD {
 	return metadata.MD{
-		Stan.String() : []string{opts.Stan},
+		Stan.String(): []string{opts.Stan},
 	}
 }
 
-func ReadMD(ctx context.Context) (*ContextMetaData, error)  {
+func ReadMD(ctx context.Context) (*ContextMetaData, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if ok {
 		return &ContextMetaData{
 			Stan: readMetaDataValue(Stan, md),
 		}, nil
 	}
-	return nil, errs.EmptyContext
+	return nil, status.Errorf(codes.Aborted, "context is empty")
 }
 
 func readMetaDataValue(key ContextKey, md metadata.MD) string {

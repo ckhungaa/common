@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	mux sync.Mutex
+	mux        sync.Mutex
 	logFactory *zap.Logger
 )
 
@@ -21,7 +21,7 @@ func provideLogFactory() (*zap.Logger, error) {
 func NewLogger(name string) *Log {
 	mux.Lock()
 	if logFactory == nil {
-		logFactory, _ =  provideLogFactory()
+		logFactory, _ = provideLogFactory()
 		logFactory = logFactory.WithOptions(zap.AddCallerSkip(2))
 	}
 	mux.Unlock()

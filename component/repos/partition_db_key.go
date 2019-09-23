@@ -3,8 +3,8 @@ package repos
 import (
 	"context"
 	"github.com/ckhungaa/common/utils/entities"
-	"github.com/ckhungaa/common/utils/errs"
-	"github.com/pkg/errors"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"strings"
 )
 
@@ -22,7 +22,8 @@ func PartitionDBKeyFromAudit(ctx context.Context, audit *entities.Audit) (*Parti
 func PartitionDBKeyFromId(ctx context.Context, id string) (*PartitionDBKey, error) {
 	ids := strings.Split(id, "_")
 	if len(ids) != 2 {
-		return nil, errors.Wrapf(errs.InvalidId, "invalid id format:%s", id)
+		log.Errorf(ctx, "invalid id format:%s", id)
+		return nil, status.Errorf(codes.InvalidArgument, "invalid id format")
 	}
 	return NewPartitionDBKey(ctx, ids[0], ids[1]), nil
 }

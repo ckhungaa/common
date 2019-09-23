@@ -4,7 +4,8 @@ import (
 	"context"
 	"github.com/ckhungaa/proto/proto"
 	"github.com/golang/protobuf/ptypes"
-	"github.com/pkg/errors"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"time"
 )
 
@@ -31,11 +32,11 @@ func (m *Audit) Modified() {
 func (m *Audit) ToProto() (*proto.Audit, error) {
 	createDate, err := ptypes.TimestampProto(m.CreatedDate)
 	if err != nil {
-		return nil, errors.Wrapf(err, "invalid timestamp format:%s", m.CreatedDate)
+		return nil, status.Errorf(codes.Aborted, "invalid timestamp format:%s", m.CreatedDate)
 	}
 	modifiedDate, err := ptypes.TimestampProto(m.ModifiedDate)
 	if err != nil {
-		return nil, errors.Wrapf(err, "invalid timestamp format:%s", m.ModifiedDate)
+		return nil, status.Errorf(codes.Aborted, "invalid timestamp format:%s", m.ModifiedDate)
 	}
 
 	return &proto.Audit{
